@@ -1,0 +1,28 @@
+# Auth / secrets — never commit these
+.msal_cache.json
+client_secret.json
+token.json
+*.token
+.streamlit/secrets.toml
+
+# Runtime output
+download.log
+*.log
+download_manifest.json
+manifest.txt
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Editor / tooling
+.claude/
+.vscode/
+.idea/
+
+# Stray local files
+create
+inline
