@@ -40,8 +40,8 @@ It writes a `download_manifest.json` straight into your destination folder, so a
 ## Install
 
 ```bash
-git clone https://github.com/<your-username>/cloud-folder-downloader.git
-cd cloud-folder-downloader
+git clone https://github.com/ashutoshgh/cloudpull.git
+cd cloudpull
 pip install -r requirements.txt
 ```
 
