@@ -36,7 +36,7 @@ scan -> manifest -> resumable download. Streamlit UI + CLI over a shared core.
 - Streaming engine shared; gdown providers use `bulk_download` (non-streaming).
 - `provider.scan(source, on_entry)` emits each file as discovered (live count +
   stream download); returns full list too.
-- `download_onedrive.py` is the original monolith, superseded by core+cli.py,
+- `cloud_downloader.py` is the original monolith, superseded by core+cli.py,
   left in place (not deleted) as the user's reference.
 
 ## Status

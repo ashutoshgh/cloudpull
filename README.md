@@ -107,7 +107,7 @@ The UI and CLI are thin. All the real work (scanning, manifests, the retrying do
 - **Public Google Drive mode (`gdown`) can be flaky** on very large files or huge folders. Google rate-limits anonymous access. If a public folder keeps stalling, set it to your account and use `gdrive_api` instead.
 - Native Google Docs/Sheets/Slides get **exported** (e.g. to `.docx`/`.xlsx`), since they have no raw bytes to download.
 - The manifest matches files by size. If a file changes on the server but keeps the same byte count, it won't be re-fetched.
-- `download_onedrive.py` is the original single-file version, kept around for reference. The `core/` + `cli.py` split superseded it.
+- `cloud_downloader.py` is the original single-file version, kept around for reference. The `core/` + `cli.py` split superseded it.
 
 ## Security note
 
