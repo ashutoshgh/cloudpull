@@ -14,8 +14,8 @@ LOG_FILE = os.path.join(SCRIPT_DIR, "download.log")
 
 PROVIDERS = {
     "onedrive": "OneDrive",
-    "gdrive_api": "Google Drive — private (OAuth)",
-    "gdrive_public": "Google Drive — public link (gdown)",
+    "gdrive_api": "Google Drive - private (OAuth)",
+    "gdrive_public": "Google Drive - public link (gdown)",
 }
 
 GDRIVE_SETUP = (
@@ -27,14 +27,14 @@ GDRIVE_SETUP = (
 )
 
 PROVIDER_HELP = (
-    "**OneDrive** — Microsoft OneDrive/SharePoint shares. Sign in with a code.\n\n"
-    "**Google Drive (public)** — any 'Anyone with the link' Drive item. No setup.\n\n"
-    "**Google Drive (private)** — your own / privately-shared Drive. One-time setup."
+    "**OneDrive**: Microsoft OneDrive/SharePoint shares. Sign in with a code.\n\n"
+    "**Google Drive (public)**: any 'Anyone with the link' Drive item. No setup.\n\n"
+    "**Google Drive (private)**: your own / privately-shared Drive. One-time setup."
 )
 
 LINK_HELP = (
     "The share URL of the folder or file you want.\n\n"
-    "- OneDrive: `https://1drv.ms/…` or `…sharepoint.com/…`\n\n"
+    "- OneDrive: `https://1drv.ms/...` or `...sharepoint.com/...`\n\n"
     "- Google folder: `https://drive.google.com/drive/folders/<id>`\n\n"
     "- Google file: `https://drive.google.com/file/d/<id>/view`\n\n"
     "Not sure how to get it? Open the **How to get your link** guide above."
@@ -48,14 +48,14 @@ DEST_HELP = (
 # Short inline hint shown under the link box, specific to the chosen provider.
 PROVIDER_HINTS = {
     "onedrive":
-        "🔗 In OneDrive (web): right-click the file/folder → **Share** → "
+        "🔗 In OneDrive (web): right-click the file/folder -> **Share** -> "
         "**Copy link**. Sign in with the Microsoft account that has access.",
     "gdrive_public":
-        "🔗 In Google Drive: right-click → **Share** → set **General access** to "
-        "**Anyone with the link** → **Copy link**. No sign-in needed.",
+        "🔗 In Google Drive: right-click -> **Share** -> set **General access** to "
+        "**Anyone with the link** -> **Copy link**. No sign-in needed.",
     "gdrive_api":
-        "🔗 In Google Drive: right-click → **Share** → **Copy link** "
-        "(access can stay Restricted — you'll sign in with your Google account).",
+        "🔗 In Google Drive: right-click -> **Share** -> **Copy link** "
+        "(access can stay Restricted; you'll sign in with your Google account).",
 }
 
 GUIDE = """\
@@ -64,8 +64,8 @@ GUIDE = """\
 | Provider | Sign-in | One-time setup | Use it for |
 |---|---|---|---|
 | **OneDrive** | Paste a code | None | OneDrive / SharePoint links |
-| **Google Drive — public** | None | None | Drive items shared as *Anyone with the link* |
-| **Google Drive — private** | Browser pop-up | `client_secret.json` | Your own or privately-shared Drive |
+| **Google Drive (public)** | None | None | Drive items shared as *Anyone with the link* |
+| **Google Drive (private)** | Browser pop-up | `client_secret.json` | Your own or privately-shared Drive |
 
 If a Google link is shared publicly, use **public** (zero setup). If it's private
 (restricted to your account), use **private**. OneDrive handles both via sign-in.
@@ -74,27 +74,27 @@ If a Google link is shared publicly, use **public** (zero setup). If it's privat
 
 ### 📘 OneDrive — getting the link
 1. Go to **onedrive.com** and find the file or folder.
-2. Right-click it → **Share** (or the *Share* button).
-3. Choose **Copy link**. If you see *"Anyone with the link"*, that's ideal — but
+2. Right-click it -> **Share** (or the *Share* button).
+3. Choose **Copy link**. If you see *"Anyone with the link"*, that's ideal, but
    a link shared directly to your account works too.
 4. Paste it into **Sharing link**.
-5. When you start, you'll get a short code + a link — open the link, paste the
+5. When you start, you'll get a short code + a link. Open the link, paste the
    code, approve. Sign in with the account that can see the files.
 
-### 📗 Google Drive — public (no setup)
-1. In **drive.google.com**, right-click the file or folder → **Share**.
+### 📗 Google Drive - public (no setup)
+1. In **drive.google.com**, right-click the file or folder -> **Share**.
 2. Under **General access**, pick **Anyone with the link**.
 3. Click **Copy link** and paste it in.
-4. No sign-in — downloading starts right away.
+4. No sign-in needed. Downloading starts right away.
    *(Large files or very big folders can be flaky in this mode; for those, use
    the private option below.)*
 
-### 📙 Google Drive — private (OAuth, one-time setup)
+### 📙 Google Drive - private (OAuth, one-time setup)
 Use this for content that must stay **Restricted**, or when public mode struggles.
-1. Right-click → **Share** → **Copy link** (access can stay Restricted).
+1. Right-click -> **Share** -> **Copy link** (access can stay Restricted).
 2. One-time: create an OAuth client and drop `client_secret.json` in the app
-   folder — the **Sign in** step shows the exact 4 steps if it's missing.
-3. Click **Sign in with Google** — a browser opens, approve, and it returns here.
+   folder. The **Sign in** step shows the exact 4 steps if it's missing.
+3. Click **Sign in with Google**. A browser opens, approve, and it returns here.
 
 ---
 
@@ -224,7 +224,7 @@ def auth_panel(p):
                      "`pip install google-auth google-auth-oauthlib google-api-python-client`")
             return False
         if not p.has_secret():
-            st.warning("`client_secret.json` not found — one-time setup:")
+            st.warning("`client_secret.json` not found. One-time setup:")
             st.code(GDRIVE_SETUP, language="text")
             st.button("I've added it — re-check")
             return False
@@ -232,7 +232,7 @@ def auth_panel(p):
             st.success("Signed in to Google Drive.")
             return True
         if ctx["auth_running"]:
-            st.info("A browser window opened — finish signing in there. "
+            st.info("A browser window opened. Finish signing in there. "
                     "This page continues automatically.")
             return False
         if st.button("Sign in with Google", type="primary"):
@@ -247,11 +247,11 @@ def auth_panel(p):
         return True
     if ctx["auth_running"] and d.device_flow:
         flow = d.device_flow
-        st.markdown(f"**Step 1 — Open this link:**  [{flow['verification_uri']}]"
+        st.markdown(f"**Step 1 - Open this link:**  [{flow['verification_uri']}]"
                     f"({flow['verification_uri']})")
-        st.markdown("**Step 2 — Enter this code:**")
+        st.markdown("**Step 2 - Enter this code:**")
         st.code(flow["user_code"], language="text")
-        st.caption("Step 3 — Approve access. This page continues automatically once done.")
+        st.caption("Step 3 - Approve access. This page continues automatically once done.")
         return False
     if st.button("Get OneDrive sign-in code", type="primary"):
         d.device_flow = p.begin_device_flow()
@@ -265,7 +265,7 @@ def auth_panel(p):
 def live_auth():
     if not st.session_state.ctx["auth_running"]:
         st.rerun()
-    st.caption("Waiting for sign-in…")
+    st.caption("Waiting for sign-in...")
 
 
 # --------------------------------------------------------------------------
@@ -275,7 +275,7 @@ def live_auth():
 @fragment(run_every=0.5)
 def live_scan():
     ctx = st.session_state.ctx
-    st.progress(0.5, text=f"Scanning… {ctx['scan_count']} files found")
+    st.progress(0.5, text=f"Scanning... {ctx['scan_count']} files found")
     if not ctx["scanning"]:
         if not ctx["error"]:
             st.session_state.manifest = ctx["manifest"]
@@ -338,7 +338,7 @@ def start_immediate(p, source, dest):
 
 def render_progress(snap):
     total = snap["files_total"] or 1
-    suffix = "  ·  still scanning…" if snap["status"] == "scanning" else ""
+    suffix = "  ·  still scanning..." if snap["status"] == "scanning" else ""
     st.progress(min(snap["processed"] / total, 1.0),
                 text=f"{snap['processed']} / {snap['files_total']} files{suffix}")
     c1, c2, c3, c4 = st.columns(4)
@@ -454,7 +454,7 @@ def main():
     if d.manifest is None:
         st.subheader("3 · Go")
         if d.start_mode == "immediate":
-            st.caption("Files start downloading the moment they're found — no waiting "
+            st.caption("Files start downloading the moment they're found. No waiting "
                        "for a full scan. Totals fill in as it goes.")
             if st.button("⚡ Start downloading now", type="primary"):
                 start_immediate(provider, source, dest)
@@ -491,11 +491,11 @@ def main():
     else:
         todo_bytes = sum(e["size"] for e in todo)
         done_before = counts[M.DONE] + counts[M.SKIP]
-        label = (f"▶ Resume download — {len(todo)} files left ({fmt_size(todo_bytes)})"
+        label = (f"▶ Resume: {len(todo)} files left ({fmt_size(todo_bytes)})"
                  if done_before or counts[M.FAIL]
-                 else f"▶ Start download — {len(todo)} files ({fmt_size(todo_bytes)})")
+                 else f"▶ Download: {len(todo)} files ({fmt_size(todo_bytes)})")
         if counts[M.FAIL]:
-            st.warning(f"{counts[M.FAIL]} file(s) failed previously — they'll be retried.")
+            st.warning(f"{counts[M.FAIL]} file(s) failed previously. They'll be retried.")
         if st.button(label, type="primary"):
             start_download(provider, m, dest)
             st.rerun()
